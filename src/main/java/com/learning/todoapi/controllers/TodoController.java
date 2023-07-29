@@ -32,4 +32,15 @@ public class TodoController {
     public Todo newTodo(@RequestBody Todo todo) {
         return this.todoRepository.save(todo);
     }
+
+    @PutMapping("/{todoId}")
+    public Optional<Todo> updateTodo(@PathVariable("todoId") Long todoId, @RequestBody Todo updateTodo) {
+        return this.todoRepository.findById(todoId)
+                .map(oldTodo -> this.todoRepository.save(updateTodo));
+    }
+
+    @DeleteMapping("/{todoId}")
+    public void deleteTodo(@PathVariable("todoId") Long todoId) {
+        this.todoRepository.deleteById(todoId);
+    }
 }
